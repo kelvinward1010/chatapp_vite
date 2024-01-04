@@ -1,3 +1,5 @@
 export const BASE_URL = "https://nodejs-server-chatapp.onrender.com/"
 export const LOCAL_AUTH = "api/auth"
 export const LOCAL_USER = "api/users"
+export const LOCAL_CONVERSATION = "api/conversations"
+export const LOCAL_MESSAGES = "api/messages"

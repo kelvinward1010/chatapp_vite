@@ -1,0 +1,13 @@
+.container{
+    height: fit-content;
+    width: fit-content;
+    margin: 0 10px;
+
+    .name{
+        text-align: center;
+        background: teal;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+}
