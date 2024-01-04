@@ -2,7 +2,10 @@
 import { Button, Form, Input, Typography, notification } from 'antd';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
-import {  WarningOutlined } from '@ant-design/icons';
+import {  CheckCircleOutlined, WarningOutlined } from '@ant-design/icons';
+import { signinService } from '../../apis/auth/sign_in';
+import storage, { storageService } from '../../utils/storage';
+import { useEffect } from 'react';
 
 
 const { Title, Text } = Typography;
@@ -23,7 +26,26 @@ export function Signin(): JSX.Element {
       password: values.password
     }
 
-    console.log(data)
+    signinService(data).then((res) => {
+
+      storage.setToken(res.token)
+      storageService.setStorage(JSON.stringify(res));
+      notification.success({
+        message: "You have been sign in successfully!",
+        icon: (
+          <CheckCircleOutlined className="done" />
+        )
+      })
+      navigate('/home/conversation')
+    }).catch((res) => {
+      notification.error({
+        message: `Could not sign in. Please try again!`,
+        description: ` ${res?.response?.data}`,
+        icon: (
+          <WarningOutlined className='warning' />
+        )
+      })
+    })
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -36,6 +58,9 @@ export function Signin(): JSX.Element {
     })
   };
 
+  useEffect(() => {
+      if (storage.getToken()) navigate("/home/conversation")
+  }, [navigate]);
 
   return (
     <div className={styles.container}>

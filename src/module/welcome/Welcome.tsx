@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from "./style.module.scss"
 import { Button, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import storage from '../../utils/storage';
 
 
 const { Title } = Typography;
@@ -30,14 +31,18 @@ export function Welcome():JSX.Element {
         }, 3000);
     };
 
+    useEffect(() => {
+        if (storage.getToken()) navigate("/home/conversation")
+    }, [navigate]);
+
     return (
         <div className={styles.container}>
             <div className={styles.center}>
                 <Title className={styles.welcome_title} level={2}>
-                    Welcome to my application!
+                    Welcome to ChatApp!
                 </Title>
                 <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
-                    Go in to my house!
+                    Next!
                 </Button>
             </div>
         </div>
